@@ -3,7 +3,9 @@ import { formatTime } from '../data/formatTime'
 export default function CaptureCard({ site, capture, onOpen }) {
   const [broken, setBroken] = useState(false)
   const available = capture?.capturedAt && !broken
-  return <article className="card">
+  return <article className="card" onClick={event => {
+    if (available && window.matchMedia('(max-width: 768px)').matches && !event.target.closest('a, button')) onOpen(site)
+  }}>
     <div className="card-heading"><div><p className="eyebrow">{site.category}</p><h2>{site.title}</h2></div><span className="status">{capture?.status === 'failed' ? '최근 캡처 실패' : available ? '캡처 저장됨' : '미확인'}</span></div>
     <p className="timestamp">마지막 캡처: {formatTime(capture?.capturedAt)}</p>
     {available ? <button className="image-button" onClick={() => onOpen(site)} aria-label={`${site.title} 이미지 크게 보기`}><img loading="lazy" src={`${site.screenshot}?v=${encodeURIComponent(capture.capturedAt)}`} alt={`${site.title} 실제 웹페이지 캡처`} onError={() => setBroken(true)} /></button> : <div className="empty">{broken ? '캡처 이미지를 불러오지 못했습니다.' : '저장된 캡처가 없습니다.'}</div>}

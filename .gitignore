@@ -25,3 +25,10 @@ dist-ssr
 
 # Local capture diagnostic reports (uploaded as Actions artifacts)
 capture-results/
+
+.env
+.env.*
+!.env.example
+.vercel/
+
+finviz-results/
