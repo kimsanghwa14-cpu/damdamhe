@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local capture diagnostic reports (uploaded as Actions artifacts)
+capture-results/

@@ -1,0 +1,47 @@
+{
+  "lastRunAt": "2026-09-06T03:48:28.783Z",
+  "sites": {
+    "naver-market-cap": {
+      "capturedAt": "2026-09-06T03:48:39.964Z",
+      "status": "ok",
+      "error": null
+    },
+    "kospi": {
+      "capturedAt": "2026-09-06T03:48:48.063Z",
+      "status": "ok",
+      "error": null
+    },
+    "kosdaq": {
+      "capturedAt": "2026-09-06T03:48:56.076Z",
+      "status": "ok",
+      "error": null
+    },
+    "us-market": {
+      "capturedAt": "2026-09-06T03:49:04.799Z",
+      "status": "ok",
+      "error": null
+    },
+    "adr": {
+      "status": "failed",
+      "error": "HTTP 403"
+    },
+    "finviz-groups": {
+      "status": "failed",
+      "error": "HTTP 403"
+    },
+    "finviz-map": {
+      "status": "failed",
+      "error": "HTTP 403"
+    },
+    "cnn-fear-greed": {
+      "status": "failed",
+      "error": "Empty or incomplete page"
+    },
+    "nya200r": {
+      "capturedAt": "2026-09-06T03:49:22.628Z",
+      "status": "ok",
+      "error": null
+    }
+  },
+  "completedAt": "2026-09-06T03:49:22.695Z"
+}
