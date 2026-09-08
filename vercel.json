@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    {
+      "source": "/data",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/data/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scanner",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scanner/",
+      "destination": "/index.html"
+    }
+  ]
+}

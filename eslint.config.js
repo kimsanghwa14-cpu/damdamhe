@@ -6,7 +6,7 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
   globalIgnores(['dist']),
-  { files: ['scripts/**/*.mjs'], extends: [js.configs.recommended], languageOptions: { globals: globals.node } },
+  { files: ['scripts/**/*.mjs', 'api/**/*.js', 'tests/**/*.mjs', 'vite.config.js'], extends: [js.configs.recommended], languageOptions: { globals: globals.node } },
   {
     files: ['**/*.{js,jsx}'],
     extends: [
