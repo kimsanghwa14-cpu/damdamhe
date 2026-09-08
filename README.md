@@ -65,3 +65,17 @@ Vercel Node 함수 `api/quote.js`가 실제 API를 호출합니다. 성공 응�
 - 컨트롤이 사라진 후 휴대폰의 기본 스크린샷 기능을 사용하세요. 앱 내 UI는 숨기지만 브라우저 자체 주소창이나 운영체제 상태바는 웹페이지 CSS로 숨길 수 없습니다.
 
 검증: 개발 서버를 실행한 뒤 `npm run test:capture-mode` (기본 http://127.0.0.1:5174). 다른 주소는 TEST_BASE_URL로 지정합니다. Chromium의 모바일 viewport와 CDP 터치 입력으로 pinch/drag/swipe를 검증하며 실제 iOS Safari 또는 Android 기기 테스트를 대신하지 않습니다.
+
+## 미국시장 스캐너
+
+`/scanner`에서 CORE(priority=1, 21종목) / FULL(37종목)을 선택합니다. 모바일 하단 내비게이션으로 시장 캡처와 전환합니다. 섹션·티커·설명·priority·차트 URL은 Python 원본을 옮긴 `src/data/watchlist.js` 한 곳에서 관리합니다.
+
+`npm run capture:finviz`는 Actions에서 실제 Finviz 차트를 다운로드하여 `public/finviz/TICKER.png`에 저장합니다. 웹브라우저는 Finviz에 요청하지 않습니다. 원본의 도메인 순서(charts2.finviz.com, finviz.com)를 사용하며 403/429 명시적 거부 응답 시 다른 호스트로 재시도하지 않습니다. HTTP 실패, 이미지가 아닌 응답, 이미지 디코딩 실패 시 기존 정상 파일과 저장 시간을 보존합니다. 매번 manifest에 최근 상태와 실패 이유를 기록합니다.
+
+차트의 크기를 바꾸지 않고 PNG로 저장합니다. 각 모드의 모든 차트가 이번 실행에 성공한 경우에만 원본 이미지를 순서대로 세로 연결하여 `market_scan_YYYY-MM-DD_core.png` / `market_scan_YYYY-MM-DD_full.png`를 만듭니다. 날짜는 실행 시작 시각의 미국 뉴욕 날짜입니다. 일부 실패 시 해당 모드의 이전 정상 한 장 이미지를 유지합니다. 실제 차트 외에 금융 값이나 그래프를 생성하지 않습니다.
+
+한 장 이미지 버튼과 각 티커 이미지는 기존 CaptureMode를 재사용합니다. `finviz:TICKER` 식별자로 위치를 저장하므로 시장 캡처와 저장 위치가 섞이지 않습니다. CORE/FULL을 전환해도 같은 티커는 같은 위치를 사용합니다.
+
+기존 Capture websites 워크플로에 Finviz 단계를 추가했습니다. 수동 실행은 선택한 브랜치를 테스트하고, 자동 커밋은 기본 브랜치의 예약 실행 또는 publish_captures=true인 수동 실행만 허용합니다. Actions Summary와 artifact의 finviz-results에서 실제 성공/실패를 확인할 수 있습니다. 전체 워크플로 시간 제한은 두 작업을 위해 45분입니다.
+
+모바일 검증: 개발 서버 실행 후 `node scripts/test-scanner.mjs`. 기본 포트 5174, TEST_BASE_URL로 변경 가능. 이미지가 없으면 해당 이미지 모달 검증은 미확인으로 보고합니다.
