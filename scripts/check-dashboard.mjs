@@ -8,7 +8,7 @@ try {
  const errors=[];page.on('pageerror',e=>errors.push(e.message))
  await page.goto(process.env.TEST_BASE_URL || 'http://127.0.0.1:5174')
  await page.locator('.image-button img').first().waitFor()
- assert.equal(await page.locator('h1').innerText(),'오늘의 시장을 한눈에')
+ assert.equal(await page.locator('h1').innerText(),'시장 대시보드')
  assert.equal(await page.locator('.card').count(),9)
  assert.equal(await page.locator('.market-section').count(),3)
  assert.ok(!await page.locator('header').innerText().then(t=>t.includes('담담히')))
@@ -22,6 +22,10 @@ try {
    await preview.evaluate(img => img.decode())
  }
  if (process.env.EXPECT_ALL_CAPTURES === '1') assert.equal(await page.locator('.image-button img').count(),9)
+ if (width === 390) {
+   assert.ok(await page.locator('#market-indicators').evaluate(el => el.clientHeight < 1550))
+   assert.equal(await page.locator('.image-button').first().evaluate(el => el.clientHeight),70)
+ }
  await page.locator('.card').last().scrollIntoViewIfNeeded()
  await page.waitForTimeout(1000)
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false)

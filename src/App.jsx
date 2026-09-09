@@ -5,6 +5,7 @@ import ImageModal from './components/ImageModal'
 import CaptureMode from './components/CaptureMode'
 import { sites } from './data/sites'
 import './App.css'
+import './dashboard.css'
 import DataPage from './pages/DataPage'
 import ScannerPage from './pages/ScannerPage'
 import MobileNavigation from './components/MobileNavigation'
@@ -43,10 +44,10 @@ function Dashboard() {
       .catch(error => { if (error.name !== 'AbortError') setError('캡처 기록을 불러올 수 없습니다. 캡처 실행 및 배포 상태를 확인하세요.') })
     return () => controller.abort()
   }, [])
-  return <div className="app"><Header manifest={manifest} category={category} onCategoryChange={setCategory} categories={['전체', ...new Set(sites.map(site => site.category))]} onReload={reload} />
+  return <div className="app dashboard"><Header manifest={manifest} category={category} onCategoryChange={setCategory} categories={['전체', ...new Set(sites.map(site => site.category))]} onReload={reload} />
     {error && <p role="alert" className="failure">{error}</p>}
     <CaptureGrid sites={sites.filter(site => category === '전체' || site.category === category)} manifest={manifest} onOpen={open} />
-    <footer>실제 웹페이지의 저장된 화면입니다. 실시간 정보는 원본 사이트에서 확인하세요.</footer>
+    <footer>지표를 누르면 크게 볼 수 있습니다. 최신 정보는 원본 사이트에서 확인하세요.</footer>
     {selected && captureMode && <CaptureMode key={selected.id} site={selected} capture={manifest.sites[selected.id]} onPrevious={() => navigate(-1)} onNext={() => navigate(1)} onClose={() => setSelected(null)} />}
     {selected && !captureMode && <ImageModal site={selected} capture={manifest.sites[selected.id]} onClose={() => setSelected(null)} />}
   </div>

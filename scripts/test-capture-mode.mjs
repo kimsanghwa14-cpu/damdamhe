@@ -27,7 +27,7 @@ try {
     await page.goto(base)
     await page.locator('.image-button').first().waitFor()
     assert.equal(await page.locator('.capture-grid').evaluateAll(elements => elements.every(el => getComputedStyle(el).gridTemplateColumns.split(' ').length === 1)),true)
-    assert.ok(await page.locator('.image-button').first().evaluate(el => el.clientHeight >= 560))
+    assert.ok(await page.locator('.image-button').first().evaluate(el => el.clientHeight <= 72))
     await open('kospi')
     const rect = await page.locator('.capture-mode').boundingBox()
     assert.equal(Math.round(rect.width),width); assert.equal(Math.round(rect.height),height)
