@@ -34,10 +34,15 @@ for (const site of sites) {
       }
     })
     page.setDefaultTimeout(20000)
-    const response = await page.goto(site.url, { waitUntil: 'load', timeout: 60000 })
+    const response = await page.goto(site.url, { waitUntil: 'domcontentloaded', timeout: 60000 })
     diagnostic.httpStatus = response?.status() ?? diagnostic.httpStatus
     if (!response || !response.ok()) throw new Error(`HTTP ${response?.status() ?? 'no response'}`)
-    await page.waitForTimeout(6000)
+    if (site.readySelector) await page.locator(site.readySelector).first().waitFor({ state: 'visible', timeout: 30000 })
+    await page.waitForTimeout(8000)
+    if (site.dismissButtonName) {
+      const dismiss = page.getByRole('dialog', { name: site.dismissDialogName, exact: true }).getByRole('button', { name: site.dismissButtonName, exact: true })
+      if (await dismiss.isVisible()) await dismiss.click()
+    }
     const body = await page.locator('body').innerText()
     if (body.trim().length < 80) throw new Error('Empty or incomplete page')
     if (/verify you are human|checking your browser|access denied|just a moment|unusual traffic|enable javascript and cookies|robot check|captcha/i.test((await page.title()) + '\n' + body.slice(0, 5000))) {
@@ -50,7 +55,7 @@ for (const site of sites) {
       await page.screenshot({ path: temporary, fullPage: site.captureType === 'fullPage', timeout: 30000 })
     } else throw new Error(`Unknown captureType: ${site.captureType}`)
     await rename(temporary, destination)
-    manifest.sites[site.id] = { capturedAt: new Date().toISOString(), status: 'ok', error: null }
+    manifest.sites[site.id] = { capturedAt: new Date().toISOString(), sourceUrl: site.url, status: 'ok', error: null }
     diagnostic.status = 'ok'
   } catch (error) {
     const reason = error.message.match(/error while loading shared libraries:[^\n]+/)?.[0] || error.message.split('\n')[0]

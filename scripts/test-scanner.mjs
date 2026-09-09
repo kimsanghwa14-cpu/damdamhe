@@ -41,7 +41,7 @@ try {
   } else console.log(`UNVERIFIED ${name}: Finviz images not available yet; no chart fixtures substituted`)
   await page.reload();await page.locator('.scanner-chart').first().waitFor()
   await page.locator('.mobile-navigation').getByRole('link',{name:'시장 캡처',exact:true}).tap()
-  await page.locator('.capture-grid').waitFor()
+  await page.locator('.capture-grid').first().waitFor()
   await page.locator('.mobile-navigation').getByRole('link',{name:'미국시장 스캐너',exact:true}).tap()
   await page.locator('.scanner-chart').first().waitFor()
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth))

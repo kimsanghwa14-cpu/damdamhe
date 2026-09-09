@@ -1,5 +1,12 @@
 name: Capture websites
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/data/sites.js'
+      - 'src/data/watchlist.js'
+      - 'scripts/capture*.mjs'
+      - '.github/workflows/capture.yml'
   workflow_dispatch:
     inputs:
       publish_captures:
@@ -48,7 +55,7 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
       - name: Commit captures and capture status when changed
-        if: github.ref_name == github.event.repository.default_branch && (github.event_name == 'schedule' || inputs.publish_captures == true)
+        if: github.ref_name == github.event.repository.default_branch && (github.event_name == 'schedule' || github.event_name == 'push' || inputs.publish_captures == true)
         shell: bash
         run: |
           git add public/captures public/finviz
@@ -60,3 +67,18 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m "chore: update website captures"
           git push origin HEAD:${{ github.event.repository.default_branch }}
+      - name: Check published capture health
+        run: |
+          node --input-type=module <<'JS'
+          import { readFileSync } from 'node:fs'
+          const results = JSON.parse(readFileSync('capture-results/results.json'))
+          if (results.success !== results.total) {
+            console.error(`${results.total - results.success} website captures failed. See the capture diagnostics artifact.`)
+            process.exitCode = 1
+          }
+          const scans = JSON.parse(readFileSync('public/finviz/manifest.json'))
+          if (Object.values(scans.tickers || {}).some(chart => chart.status !== 'ok')) {
+            console.error('Some scanner charts failed. See the Finviz diagnostics artifact.')
+            process.exitCode = 1
+          }
+          JS

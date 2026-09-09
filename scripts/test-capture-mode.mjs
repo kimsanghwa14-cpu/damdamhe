@@ -26,7 +26,7 @@ try {
     }
     await page.goto(base)
     await page.locator('.image-button').first().waitFor()
-    assert.equal(await page.locator('.capture-grid').evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length),1)
+    assert.equal(await page.locator('.capture-grid').evaluateAll(elements => elements.every(el => getComputedStyle(el).gridTemplateColumns.split(' ').length === 1)),true)
     assert.ok(await page.locator('.image-button').first().evaluate(el => el.clientHeight >= 560))
     await open('kospi')
     const rect = await page.locator('.capture-mode').boundingBox()
@@ -83,9 +83,9 @@ try {
   const page = await browser.newPage()
   await page.goto(base)
   await page.locator('.image-button').first().waitFor()
-  for (const [width,columns] of [[768,1],[769,2],[1440,2]]) {
+  for (const [width,columns] of [[768,1],[769,2],[1440,3]]) {
     await page.setViewportSize({width,height:1000})
-    assert.equal(await page.locator('.capture-grid').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length),columns)
+    assert.equal(await page.locator('.capture-grid').first().evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length),columns)
   }
   await page.locator('.image-button').first().click()
   await page.locator('.modal-toolbar').waitFor()
