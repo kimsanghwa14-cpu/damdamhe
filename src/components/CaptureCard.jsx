@@ -3,7 +3,7 @@ import { formatTime } from '../data/formatTime'
 export default function CaptureCard({ site, capture, onOpen }) {
   const [broken, setBroken] = useState(false)
   const available = capture?.capturedAt && !broken
-  return <article className="card" onClick={event => {
+  return <article className={`card ${site.viewport.width > 768 ? 'card-wide' : ''}`} onClick={event => {
     if (available && window.matchMedia('(max-width: 768px)').matches && !event.target.closest('a, button')) onOpen(site)
   }}>
     <div className="card-heading"><div><p className="eyebrow">{site.category}</p><h2>{site.title}</h2></div><span className={`status ${capture?.status === 'failed' || !available ? 'status-delayed' : 'status-ok'}`}>{capture?.status === 'failed' ? '갱신 지연' : available ? '저장 완료' : '준비 중'}</span></div>
