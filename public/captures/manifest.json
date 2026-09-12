@@ -1,61 +1,61 @@
 {
-  "lastRunAt": "2026-09-11T22:14:57.785Z",
+  "lastRunAt": "2026-09-12T22:14:11.450Z",
   "sites": {
     "naver-market-cap": {
-      "capturedAt": "2026-09-11T22:15:07.916Z",
+      "capturedAt": "2026-09-12T22:14:21.768Z",
       "sourceUrl": "https://m.stock.naver.com/domestic/home/capitalization/total",
       "status": "ok",
       "error": null
     },
     "kospi": {
-      "capturedAt": "2026-09-11T22:15:17.311Z",
+      "capturedAt": "2026-09-12T22:14:31.186Z",
       "sourceUrl": "https://m.stock.naver.com/domestic/index/KOSPI/total",
       "status": "ok",
       "error": null
     },
     "kosdaq": {
-      "capturedAt": "2026-09-11T22:15:26.641Z",
+      "capturedAt": "2026-09-12T22:14:40.567Z",
       "sourceUrl": "https://m.stock.naver.com/domestic/index/KOSDAQ/total",
       "status": "ok",
       "error": null
     },
     "us-market": {
-      "capturedAt": "2026-09-11T22:15:36.440Z",
+      "capturedAt": "2026-09-12T22:14:50.400Z",
       "sourceUrl": "https://m.stock.naver.com/worldstock/home/USA/marketValue/total",
       "status": "ok",
       "error": null
     },
     "finviz-groups": {
-      "capturedAt": "2026-09-11T22:15:45.740Z",
+      "capturedAt": "2026-09-12T22:14:59.635Z",
       "sourceUrl": "https://www.tradingview.com/markets/stocks-usa/sectorandindustry-sector/",
       "status": "ok",
       "error": null
     },
     "finviz-map": {
-      "capturedAt": "2026-09-11T22:15:54.904Z",
+      "capturedAt": "2026-09-12T22:15:08.818Z",
       "sourceUrl": "https://www.tradingview.com/heatmap/stock/#%7B%22dataSource%22%3A%22SPX500%22%7D",
       "status": "ok",
       "error": null
     },
     "adr": {
-      "capturedAt": "2026-09-11T22:16:05.027Z",
+      "capturedAt": "2026-09-12T22:15:18.851Z",
       "sourceUrl": "https://jusikbot.com/adr",
       "status": "ok",
       "error": null
     },
     "cnn-fear-greed": {
-      "capturedAt": "2026-09-11T22:16:13.583Z",
+      "capturedAt": "2026-09-12T22:15:27.507Z",
       "sourceUrl": "https://feargreedmeter.com/fear-and-greed-index",
       "status": "ok",
       "error": null
     },
     "nya200r": {
-      "capturedAt": "2026-09-11T22:16:22.182Z",
+      "capturedAt": "2026-09-12T22:15:36.105Z",
       "sourceUrl": "https://stockcharts.com/freecharts/symbolsummary.html?sym=%24NYA200R",
       "status": "ok",
       "error": null
     }
   },
-  "completedAt": "2026-09-11T22:16:22.242Z",
-  "lastSuccessfulRunAt": "2026-09-11T22:16:22.242Z"
+  "completedAt": "2026-09-12T22:15:36.163Z",
+  "lastSuccessfulRunAt": "2026-09-12T22:15:36.163Z"
 }
